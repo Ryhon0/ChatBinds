@@ -107,7 +107,7 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 		public BindMenuScreen parent;
 
 		public BindList(BindMenuScreen parent, MinecraftClient client, int w, int h) {
-			super(client, w, h, 0, 32);
+			super(client, w, h, 0, h, 32);
 			this.parent = parent;
 			updateEntries();
 		}
@@ -115,14 +115,14 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 		public void updateEntries() {
 			this.clearEntries();
 			for (ChatBind b : ChatBinds.Binds) {
-				Entry e = new Entry(client, b, this);
+				xyz.ryhon.chatbinds.BindMenuScreen.BindList.Entry e = new xyz.ryhon.chatbinds.BindMenuScreen.BindList.Entry(client, b, this);
 				addEntry(e);
 				if (getSelectedOrNull() == null)
 					setSelected(e);
 			}
 		}
 
-		static class Entry extends AlwaysSelectedEntryListWidget.Entry<Entry> {
+		static class Entry extends AlwaysSelectedEntryListWidget.Entry<xyz.ryhon.chatbinds.BindMenuScreen.BindList.Entry> {
 			MinecraftClient client;
 			public ChatBind bind;
 			BindList parent;
@@ -157,8 +157,8 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.title), x + 8, y + 8, 0xFFFFFF);
 				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.cmd), x + 8, y + 16, 0x888888);
 
-				keyButton.setX(x + entryWidth - 64 - 4);
-				keyButton.setY(y);
+				keyButton.method_46421(x + entryWidth - 64 - 4);
+				keyButton.method_46419(y);
 				keyButton.setWidth(64);
 				keyButton.setHeight(entryHeight);
 				keyButton.render(context, mouseX, mouseY, tickDelta);
