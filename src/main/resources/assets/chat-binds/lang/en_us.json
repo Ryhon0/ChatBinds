@@ -1,0 +1,18 @@
+{
+	"category.chatbinds": "Chat Binds",
+	"category.chatbinds.user": "Chat Binds - User Binds",
+
+	"chatbinds.key.menu": "Message Binds Menu",
+	"chatbinds.key.add_chat": "Bind Message or command",
+
+	"chatbinds.addScreen.title":"Title",
+	"chatbinds.addScreen.command": "Message or Command",
+	"chatbinds.addScreen.keybind": "Keybind",
+	"chatbinds.addScreen.add": "Add",
+	"chatbinds.addScreen.cancel": "Cancel",
+
+	"chatbinds.menuScreen.done": "Done",
+	"chatbinds.menuScreen.reload": "Reload Config",
+	"chatbinds.menuScreen.new": "Add New",
+	"chatbinds.menuScreen.remove": "Remove Selected"	
+}

@@ -1,0 +1,17 @@
+{
+	"modmenu.descriptionTranslation.chat-binds": "Przypisz wiadomości i komendy do klawisza.",
+
+	"category.chatbinds": "Chat Binds",
+	"category.chatbinds.user": "Chat Binds - Skróty użytkownika",
+
+	"chatbinds.addScreen.title":"Tytuł",
+	"chatbinds.addScreen.command": "Wiadomość lub komenda",
+	"chatbinds.addScreen.keybind": "Skrót klawiszowy",
+	"chatbinds.addScreen.add": "Dodaj",
+	"chatbinds.addScreen.cancel": "Anuluj",
+
+	"chatbinds.menuScreen.done": "Gotowe",
+	"chatbinds.menuScreen.reload": "Przeładuj konfigurację",
+	"chatbinds.menuScreen.new": "Dodaj nowy",
+	"chatbinds.menuScreen.remove": "Usuń wybrany"
+}
