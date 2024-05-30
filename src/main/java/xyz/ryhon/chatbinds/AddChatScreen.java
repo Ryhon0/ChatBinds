@@ -37,7 +37,7 @@ public class AddChatScreen extends Screen {
 		titleText.setY((height / 2) - 64);
 		addDrawable(titleText);
 
-		titleBox = new TextFieldWidget(client.textRenderer, width / 2, 24, Text.empty());
+		titleBox = new TextFieldWidget(client.textRenderer, 0, 0, width / 2, 24, Text.empty());
 		titleBox.setPosition(width / 2 - (titleBox.getWidth() / 2), titleText.getY() + titleText.getHeight());
 		addDrawable(titleBox);
 		addSelectableChild(titleBox);
@@ -47,7 +47,7 @@ public class AddChatScreen extends Screen {
 		commandText.setY(titleBox.getY() + titleBox.getHeight());
 		addDrawable(commandText);
 
-		commandBox = new TextFieldWidget(client.textRenderer, width / 2, 24, Text.empty());
+		commandBox = new TextFieldWidget(client.textRenderer, 0, 0, width / 2, 24, Text.empty());
 		titleBox.setChangedListener(this::onCommandChanged);
 		commandBox.setPosition(width / 2 - (commandBox.getWidth() / 2), commandText.getY() + commandText.getHeight());
 		addDrawable(commandBox);
