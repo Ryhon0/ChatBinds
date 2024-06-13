@@ -100,7 +100,7 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 		public BindMenuScreen parent;
 
 		public BindList(BindMenuScreen parent, MinecraftClient client, int w, int h) {
-			super(client, w, h, 0, h, 32);
+			super(client, w, h, 0, 32);
 			this.parent = parent;
 			updateEntries();
 		}
