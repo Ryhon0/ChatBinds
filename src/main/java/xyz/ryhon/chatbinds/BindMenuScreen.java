@@ -169,9 +169,9 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		if (selectedEntry != null) {
 			if (keyCode == GLFW.GLFW_KEY_ESCAPE)
-				client.options.setKeyCode(selectedEntry.bind.bind, InputUtil.UNKNOWN_KEY);
+				selectedEntry.bind.bind.setBoundKey(InputUtil.UNKNOWN_KEY);
 			else
-				client.options.setKeyCode(selectedEntry.bind.bind, InputUtil.fromKeyCode(keyCode, scanCode));
+				selectedEntry.bind.bind.setBoundKey(InputUtil.fromKeyCode(keyCode, scanCode));
 			KeyBinding.updateKeysByCode();
 
 			selectedEntry.update();
@@ -185,7 +185,7 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
 		if (selectedEntry != null) {
-			client.options.setKeyCode(selectedEntry.bind.bind, InputUtil.Type.MOUSE.createFromCode(button));
+			selectedEntry.bind.bind.setBoundKey(InputUtil.Type.MOUSE.createFromCode(button));
 			KeyBinding.updateKeysByCode();
 			selectedEntry.update();
 			selectedEntry = null;
