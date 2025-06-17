@@ -101,6 +101,16 @@ public class ChatBinds implements ModInitializer {
 	static Path configFileBinds = configDir.resolve("binds.json");
 
 	static void loadConfig() {
+		MinecraftClient mc = MinecraftClient.getInstance();
+		if(Binds != null && mc.options != null)
+		{
+			ArrayList<KeyBinding> keys = new ArrayList<>();
+			keys.addAll(Arrays.asList(mc.options.allKeys));
+			for (ChatBind b : Binds)
+				keys.remove(b.bind);
+			mc.options.allKeys = keys.toArray(new KeyBinding[0]);
+		}
+
 		Binds = new ArrayList<>();
 
 		try {

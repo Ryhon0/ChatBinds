@@ -35,7 +35,10 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 		int sideBarX = width - 128;
 		int padding = 8;
 		int buttonHeight = 32;
-
+		
+		if(list != null)
+			remove(list);
+			
 		list = new BindList(this, client, width - sideBarW, height);
 		list.updateEntries();
 		addDrawableChild(list);
@@ -147,12 +150,13 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 			@Override
 			public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight,
 					int mouseX, int mouseY, boolean hovered, float tickDelta) {
-				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.title), x + 8, y + 8, 0xFFFFFF);
-				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.cmd), x + 8, y + 16, 0x888888);
+				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.title), x + 8, y + 8, 0xFFFFFFFF);
+				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.cmd), x + 8, y + 16, 0xFF888888);
 
 				keyButton.setX(x + entryWidth - 64 - 4);
 				keyButton.setY(y);
 				keyButton.setWidth(64);
+				keyButton.setHeight(entryHeight);
 				keyButton.render(context, mouseX, mouseY, tickDelta);
 			}
 
@@ -168,11 +172,13 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		if (selectedEntry != null) {
+			MinecraftClient mc = MinecraftClient.getInstance();
 			if (keyCode == GLFW.GLFW_KEY_ESCAPE)
 				selectedEntry.bind.bind.setBoundKey(InputUtil.UNKNOWN_KEY);
 			else
 				selectedEntry.bind.bind.setBoundKey(InputUtil.fromKeyCode(keyCode, scanCode));
 			KeyBinding.updateKeysByCode();
+			mc.options.write();
 
 			selectedEntry.update();
 			selectedEntry = null;
