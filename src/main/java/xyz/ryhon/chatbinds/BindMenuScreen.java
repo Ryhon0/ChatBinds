@@ -3,10 +3,12 @@ package xyz.ryhon.chatbinds;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
@@ -148,35 +150,35 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 			}
 
 			@Override
-			public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight,
-					int mouseX, int mouseY, boolean hovered, float tickDelta) {
-				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.title), x + 8, y + 8, 0xFFFFFFFF);
-				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.cmd), x + 8, y + 16, 0xFF888888);
-
-				keyButton.setX(x + entryWidth - 64 - 4);
-				keyButton.setY(y);
-				keyButton.setWidth(64);
-				keyButton.setHeight(entryHeight);
-				keyButton.render(context, mouseX, mouseY, tickDelta);
+			public boolean mouseClicked(Click click, boolean doubled) {
+				parent.setSelected(this);
+				keyButton.mouseClicked(click, doubled);
+				return true;
 			}
 
 			@Override
-			public boolean mouseClicked(double mouseX, double mouseY, int button) {
-				parent.setSelected(this);
-				keyButton.mouseClicked(mouseX, mouseY, button);
-				return true;
+			public void render(DrawContext context, int mouseX, int mouseY, boolean hovered, float deltaTicks) {
+				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.title), getX() + 8, getY() + 8, 0xFFFFFFFF);
+				context.drawTextWithShadow(client.textRenderer, Text.literal(bind.cmd), getX() + 8, getY() + 16, 0xFF888888);
+				
+				
+				keyButton.setX(getX() + getWidth() - 64 - 4);
+				keyButton.setY(getY());
+				keyButton.setWidth(64);
+				keyButton.setHeight(getHeight());
+				keyButton.render(context, mouseX, mouseY, deltaTicks);
 			}
 		}
 	}
 
 	@Override
-	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+	public boolean keyPressed(KeyInput input) {
 		if (selectedEntry != null) {
 			MinecraftClient mc = MinecraftClient.getInstance();
-			if (keyCode == GLFW.GLFW_KEY_ESCAPE)
+			if (input.key() == GLFW.GLFW_KEY_ESCAPE)
 				selectedEntry.bind.bind.setBoundKey(InputUtil.UNKNOWN_KEY);
 			else
-				selectedEntry.bind.bind.setBoundKey(InputUtil.fromKeyCode(keyCode, scanCode));
+				selectedEntry.bind.bind.setBoundKey(InputUtil.fromKeyCode(input));
 			KeyBinding.updateKeysByCode();
 			mc.options.write();
 
@@ -185,18 +187,6 @@ public class BindMenuScreen extends Screen implements ModMenuApi {
 
 			return true;
 		}
-		return super.keyPressed(keyCode, scanCode, modifiers);
-	}
-
-	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		if (selectedEntry != null) {
-			selectedEntry.bind.bind.setBoundKey(InputUtil.Type.MOUSE.createFromCode(button));
-			KeyBinding.updateKeysByCode();
-			selectedEntry.update();
-			selectedEntry = null;
-			return true;
-		}
-		return super.mouseClicked(mouseX, mouseY, button);
+		return super.keyPressed(input);
 	}
 }

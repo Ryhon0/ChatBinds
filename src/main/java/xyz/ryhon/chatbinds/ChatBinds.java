@@ -3,11 +3,13 @@ package xyz.ryhon.chatbinds;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.impl.client.keybinding.KeyBindingRegistryImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.option.KeyBinding.Category;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.nio.file.Files;
@@ -30,13 +32,14 @@ public class ChatBinds implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		var category = Category.create(Identifier.of("chatbinds", "chatbinds"));
 		KeyBinding menuBind = new KeyBinding("chatbinds.key.menu",
 				InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN,
-				"category.chatbinds");
+				category);
 		KeyBindingHelper.registerKeyBinding(menuBind);
 		KeyBinding addChatBind = new KeyBinding("chatbinds.key.add_chat",
 				InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN,
-				"category.chatbinds");
+				category);
 		KeyBindingHelper.registerKeyBinding(addChatBind);
 
 		ClientTickEvents.START_CLIENT_TICK.register(client -> {
@@ -65,17 +68,17 @@ public class ChatBinds implements ModInitializer {
 		public String title;
 	}
 
+	static Category UserCategory = Category.create(Identifier.of("chatbinds","user"));
 	public static ChatBind registerCommand(String cmd, String title) {
 		ChatBind b = new ChatBind();
 		b.cmd = cmd;
 		b.title = title;
 		b.bind = new KeyBinding(title,
 				InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN,
-				"category.chatbinds.user");
+				UserCategory);
 
 		MinecraftClient mc = MinecraftClient.getInstance();
 		if (mc.options != null) {
-			KeyBindingRegistryImpl.addCategory(b.bind.getCategory());
 			ArrayList<KeyBinding> keys = new ArrayList<>();
 			keys.addAll(Arrays.asList(mc.options.allKeys));
 			keys.add(b.bind);

@@ -2,10 +2,12 @@ package xyz.ryhon.chatbinds;
 
 import org.lwjgl.glfw.GLFW;
 
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.TextWidget;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
@@ -93,34 +95,23 @@ public class AddChatScreen extends Screen {
 		updateKeyText();
 	}
 
-	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+	public boolean keyPressed(KeyInput input) {
 		if (listening) {
-			if (keyCode == GLFW.GLFW_KEY_ESCAPE)
+			if (input.key() == InputUtil.GLFW_KEY_ESCAPE)
 				key = InputUtil.UNKNOWN_KEY;
 			else
-				key = InputUtil.fromKeyCode(keyCode, scanCode);
+				key = InputUtil.fromKeyCode(input);
 
 			listening = false;
 			updateKeyText();
 			return true;
 		}
 
-		if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER) {
+		if (input.key() == GLFW.GLFW_KEY_ENTER || input.key() == GLFW.GLFW_KEY_KP_ENTER) {
 			add();
 			return true;
 		}
-		return super.keyPressed(keyCode, scanCode, modifiers);
-	}
-
-	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		if (listening) {
-			key = InputUtil.Type.MOUSE.createFromCode(button);
-			listening = false;
-			updateKeyText();
-			return true;
-		}
-		return super.mouseClicked(mouseX, mouseY, button);
+		return super.keyPressed(input);
 	}
 
 	void updateKeyText() {

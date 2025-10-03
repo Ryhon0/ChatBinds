@@ -1,8 +1,8 @@
 {
 	"modmenu.descriptionTranslation.chat-binds": "Przypisz wiadomości i komendy do klawisza.",
 
-	"category.chatbinds": "Chat Binds",
-	"category.chatbinds.user": "Chat Binds - Skróty użytkownika",
+	"key.category.chatbinds.chatbinds": "Chat Binds",
+	"key.category.chatbinds.user": "Chat Binds - Skróty użytkownika",
 
 	"chatbinds.addScreen.title":"Tytuł",
 	"chatbinds.addScreen.command": "Wiadomość lub komenda",
